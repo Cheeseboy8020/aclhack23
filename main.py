@@ -1,5 +1,6 @@
 # Example file showing a circle moving on screen
 import pygame
+from pygame import Rect
 
 # pygame setup
 pygame.init()
@@ -20,7 +21,7 @@ while running:
     # fill the screen with a color to wipe away anything from last frame
     screen.fill("blue")
 
-    pygame.draw.circle(screen, "red", player_pos, 40)
+    
 
     keys = pygame.key.get_pressed()
     if keys[pygame.K_w]:
