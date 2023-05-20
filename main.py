@@ -1,15 +1,22 @@
 # Example file showing a circle moving on screen
-import pygame
-from pygame import Rect
+import math
 
-# pygame setup
+import pygame
+from pygame import Vector2
+
+from Ship import Ship
+from SpriteSheet import SpriteSheet
+
+# pygame setupd
 pygame.init()
-screen = pygame.display.set_mode((720, 720))
+screen = pygame.display.set_mode((800, 800))
 clock = pygame.time.Clock()
 running = True
 dt = 0
 
-player_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2)
+sheet = SpriteSheet('pirate.png')
+
+pirate = Ship(sheet, Vector2(screen.get_width()/2, screen.get_height()/2))
 
 while running:
     # poll for events
@@ -21,17 +28,9 @@ while running:
     # fill the screen with a color to wipe away anything from last frame
     screen.fill("blue")
 
-    
-
     keys = pygame.key.get_pressed()
-    if keys[pygame.K_w]:
-        player_pos.y -= 300 * dt
-    if keys[pygame.K_s]:
-        player_pos.y += 300 * dt
-    if keys[pygame.K_a]:
-        player_pos.x -= 300 * dt
-    if keys[pygame.K_d]:
-        player_pos.x += 300 * dt
+
+    pirate.update(keys[pygame.K_w], keys[pygame.K_a], keys[pygame.K_s], keys[pygame.K_d], screen, dt)
 
     # flip() the display to put your work on screen
     pygame.display.flip()
@@ -42,3 +41,4 @@ while running:
     dt = clock.tick(60) / 1000
 
 pygame.quit()
+
