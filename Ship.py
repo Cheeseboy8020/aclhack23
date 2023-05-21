@@ -1,8 +1,6 @@
 import math
 
 import pygame
-from pygame.math import Vector2
-
 import SpriteSheet
 
 
@@ -19,6 +17,7 @@ class Ship(pygame.sprite.Sprite):
         self.h = self.sheet.sprite_sheet.get_height()/4
         self.rect.x = self.player_pos.x
         self.rect.y = self.player_pos.y
+        self.hp = 10
 
     def update(self, w, a, s, d, screen, dt):
         if 45 < self.heading < 135:
@@ -35,12 +34,12 @@ class Ship(pygame.sprite.Sprite):
             self.off = 0
 
         if w:
-            self.player_pos.x += math.cos(math.radians(self.heading + 90)) * dt * 100
-            self.player_pos.y -= math.sin(math.radians(self.heading + 90)) * dt * 100
+            self.player_pos.x += math.cos(math.radians(self.heading + 90)) * dt * 150
+            self.player_pos.y -= math.sin(math.radians(self.heading + 90)) * dt * 150
             # player_pos += Vector2.from_polar((1, heading-off)) * dt * 100
         if s:
-            self.player_pos.x -= math.cos(math.radians(self.heading + 90)) * dt * 100
-            self.player_pos.y += math.sin(math.radians(self.heading + 90)) * dt * 100
+            self.player_pos.x -= math.cos(math.radians(self.heading + 90)) * dt * 150
+            self.player_pos.y += math.sin(math.radians(self.heading + 90)) * dt * 150
         if a:
             self.heading = (self.heading + (dt * 30) + 360) % 360
         if d:
@@ -60,4 +59,5 @@ class Ship(pygame.sprite.Sprite):
         if self.rect.bottom > screen.get_height():
             self.player_pos.y = screen.get_height() - self.rect.height
 
-        screen.blit(pygame.transform.rotate(self.image, self.heading - self.off), (self.player_pos.x, self.player_pos.y))
+        self.image = pygame.transform.rotate(self.image, self.heading - self.off)
+        self.rect = self.image.get_rect(center=self.image.get_rect(topleft=self.player_pos).center)
