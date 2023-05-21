@@ -15,21 +15,23 @@ class Ship(pygame.sprite.Sprite):
         self.off = 0
         self.image = sheet.get_image(0, sheet.sprite_sheet.get_height()/4*3, sheet.sprite_sheet.get_width()/4, sheet.sprite_sheet.get_height()/4)
         self.rect = pygame.transform.rotate(self.image, self.heading-self.off).get_rect()
+        self.w = self.sheet.sprite_sheet.get_width()/4
+        self.h = self.sheet.sprite_sheet.get_height()/4
         self.rect.x = self.player_pos.x
         self.rect.y = self.player_pos.y
 
     def update(self, w, a, s, d, screen, dt):
         if 45 < self.heading < 135:
-            self.image = self.sheet.get_image(0, 854 / 4, 712 / 4, 854 / 4)
+            self.image = self.sheet.get_image(0, self.h, self.w, self.h)
             self.off = 90
         elif 135 <= self.heading <= 225:
-            self.image = self.sheet.get_image(0, 0, 712 / 4, 854 / 4)
+            self.image = self.sheet.get_image(0, 0, self.w, self.h)
             self.off = 180
         elif 225 < self.heading < 315:
-            self.image = self.sheet.get_image(0, 854 / 4 * 2, 712 / 4, 854 / 4)
+            self.image = self.sheet.get_image(0, self.h * 2,self.w, self.h)
             self.off = 270
         else:
-            self.image = self.sheet.get_image(0, 854 / 4 * 3, 712 / 4, 854 / 4)
+            self.image = self.sheet.get_image(0, self.h * 3, self.w, self.h)
             self.off = 0
 
         if w:
